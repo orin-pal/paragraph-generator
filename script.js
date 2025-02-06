@@ -28,9 +28,18 @@ function generateParagraph(sentenceCount) {
   return paragraph.trim(); // Remove the trailing space
 }
 
+// Function to copy text to clipboard
+function copyToClipboard(text) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => alert("Paragraph copied to clipboard!"))
+    .catch(() => alert("Failed to copy paragraph."));
+}
+
 // Get references to DOM elements
 const sentenceCountInput = document.getElementById("sentence-count");
 const generateBtn = document.getElementById("generate-btn");
+const copyBtn = document.getElementById("copy-btn");
 const generatedParagraph = document.getElementById("generated-paragraph");
 
 // Add event listener to the generate button
@@ -49,4 +58,17 @@ generateBtn.addEventListener("click", () => {
 
   // Display the generated paragraph
   generatedParagraph.textContent = paragraph;
+
+  // Enable the copy button
+  copyBtn.disabled = false;
+});
+
+// Add event listener to the copy button
+copyBtn.addEventListener("click", () => {
+  const paragraphText = generatedParagraph.textContent;
+  if (paragraphText) {
+    copyToClipboard(paragraphText);
+  } else {
+    alert("No paragraph to copy.");
+  }
 });
